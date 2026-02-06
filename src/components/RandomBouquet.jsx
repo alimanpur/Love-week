@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import bouquet1 from "../assets/bouquets/bouquet-crimson.jpg";
+import bouquet1 from "../assets/bouquets/bouquet-crimson.png";
 import bouquet2 from "../assets/bouquets/bouquet-golden.jpg";
 import bouquet3 from "../assets/bouquets/bouquet-blush.jpg";
 import bouquet4 from "../assets/bouquets/bouquet-ivory.jpg";
-import bouquet5 from "../assets/bouquets/bouquet-mixed.jpg";
+import bouquet5 from "../assets/bouquets/bouquet-mixed.png";
 
 export default function RandomBouquet() {
   const bouquets = [bouquet1, bouquet2, bouquet3, bouquet4, bouquet5];
