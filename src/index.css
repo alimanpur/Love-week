@@ -1,0 +1,110 @@
+@import "tailwindcss";
+:root {
+  --bg: #fdf6f0;
+  --card: rgba(255, 255, 255, 0.85);
+  --primary: #6d1f2a;
+  --accent: #d4af37;
+  --text: #2b1b1d;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.love-title {
+  font-family: "La Parisienne", cursive;
+}
+
+.love-body {
+  font-family: "Cormorant Garamond", serif;
+}
+
+
+/* 🌸 Floating Petals Animation */
+.petal {
+  position: absolute;
+  top: -10%;
+  font-size: 22px;
+  opacity: 0.5;
+  animation: fall 8s linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+/* Delay helpers */
+.animation-delay-0 {
+  animation-delay: 0s;
+}
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+.animation-delay-3000 {
+  animation-delay: 3s;
+}
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+/* 🌙 Premium Animated Background */
+/* .blob {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 999px;
+  filter: blur(90px);
+  opacity: 0.35;
+  animation: floatBlob 10s ease-in-out infinite;
+} */
+
+.blob1 {
+  background: #6d1f2a;
+  top: -80px;
+  left: -80px;
+}
+
+.blob2 {
+  background: #d4af37;
+  bottom: -100px;
+  right: -80px;
+  animation-delay: 3s;
+}
+
+@keyframes floatBlob {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(50px);
+  }
+}
+
+/* 🌸 Floating petals */
+.petal {
+  position: absolute;
+  top: -10%;
+  font-size: 20px;
+  opacity: 0.35;
+  animation: fall 10s linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(120vh) rotate(360deg);
+  }
+}
+
+
