@@ -14,11 +14,15 @@ body {
 
 .love-title {
   font-family: "La Parisienne", cursive;
+  font-weight: 400;
+  color: inherit; /* ✅ DO NOT FORCE PINK */
 }
 
 .love-body {
   font-family: "Cormorant Garamond", serif;
+  color: inherit; /* ✅ Let Tailwind decide */
 }
+
 
 
 /* 🌸 Floating Petals Animation */
@@ -107,4 +111,139 @@ body {
   }
 }
 
+/* ========================= */
+/* 🌌 DAY 2 ROYAL MIDNIGHT */
+/* ========================= */
 
+.royal-bg {
+  background: radial-gradient(circle at top, #0b1d39, #050816, #000);
+}
+
+.royal-card {
+  background: rgba(15, 25, 55, 0.75);
+  border: 1px solid rgba(255, 215, 100, 0.15);
+  backdrop-filter: blur(18px);
+  border-radius: 24px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+}
+
+.royal-title {
+  color: #ffe9a6;
+}
+
+.royal-text {
+  color: rgba(230, 230, 255, 0.8);
+}
+
+.royal-button {
+  background: linear-gradient(to right, #f7d774, #ffd24a, #f7d774);
+  color: black;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 12px 18px;
+  width: 100%;
+  box-shadow: 0 0 25px rgba(255, 210, 80, 0.25);
+  transition: 0.3s;
+}
+
+.royal-button:hover {
+  transform: scale(1.03);
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  background: url("https://www.transparenttextures.com/patterns/stardust.png");
+  opacity: 0.25;
+}
+
+.moon {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6cc, transparent);
+  opacity: 0.3;
+  animation: drift 8s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from { transform: translateX(0px); }
+  to { transform: translateX(60px); }
+}
+
+/* Shooting Stars */
+.shooting {
+  position: absolute;
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(to right, gold, transparent);
+  opacity: 0.7;
+  animation: shoot 4s linear infinite;
+}
+
+.shooting1 { top: 20%; left: -30%; }
+.shooting2 { top: 50%; left: -50%; animation-delay: 1.5s; }
+.shooting3 { top: 70%; left: -40%; animation-delay: 3s; }
+
+@keyframes shoot {
+  from { transform: translateX(0); }
+  to { transform: translateX(150vw); }
+}
+
+.shooting-star {
+  position: absolute;
+  width: 160px;
+  height: 2px;
+  background: linear-gradient(to left, white, transparent);
+  opacity: 0;
+  transform: rotate(-25deg);
+  animation: shootStar 6s infinite;
+}
+
+@keyframes shootStar {
+  0% {
+    transform: translateX(0) translateY(0) rotate(-25deg);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(-700px) translateY(400px) rotate(-25deg);
+    opacity: 0;
+  }
+}
+
+
+.stardust {
+  position: absolute;
+  top: -10px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 215, 150, 0.85);
+  opacity: 0.8;
+  animation: stardustFall linear infinite;
+}
+
+@keyframes stardustFall {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+/* ✅ Day2 Midnight Theme Override */
+/* .midnight-title {
+  font-family: "Cormorant Garamond", serif;
+  color: #f5d67b !important;
+}
+
+.midnight-body {
+  color: rgba(255, 255, 255, 0.85) !important;
+} */

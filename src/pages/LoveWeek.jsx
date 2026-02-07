@@ -1,82 +1,146 @@
-import React,{ useState } from "react";
+import React, { useState, useEffect } from "react";
+
+/* Days */
 import Day1Rose from "../chapters/day1/Day1Rose";
-import { getUnlockedDay } from "../utils/unlock";
+import Day2Propose from "../chapters/day2/Day2Propose";
+
+/* Backgrounds */
+import Day1Background from "../components/backgrounds/Day1Background";
+import Day2Background from "../components/backgrounds/Day2Background";
+
+/* Layout */
+import LoveLayout from "../components/LoveLayout";
+
+/* Music */
+import MusicToggle from "../components/MusicToggle";
+
+/* Release Control */
+import { ACTIVE_DAY } from "../data/release";
 
 export default function LoveWeek() {
-  const [activeDay, setActiveDay] = useState(1);
+  const [currentDay, setCurrentDay] = useState(1);
 
-  const unlockedDay = getUnlockedDay();
+  /* ✅ Allow switching only up to ACTIVE_DAY */
+  const handleDayClick = (day) => {
+    if (day <= ACTIVE_DAY) {
+      setCurrentDay(day);
+    }
+  };
 
-  const days = [
-    { id: 1, title: "Rose Day 🌹" },
-    { id: 2, title: "Propose Day 💍" },
-    { id: 3, title: "Chocolate Day 🍫" },
-    { id: 4, title: "Teddy Day 🧸" },
-    { id: 5, title: "Promise Day 🤝" },
-    { id: 6, title: "Hug Day 🤗" },
-    { id: 7, title: "Kiss Day 💋" },
-  ];
+  /* ✅ FORCE FULL WEBSITE THEME CHANGE */
+  useEffect(() => {
+    if (currentDay === 2) {
+      // 🌌 Royal Midnight Theme
+      document.body.style.backgroundColor = "#050914";
+    } else {
+      // 🌸 Rose Day Theme
+      document.body.style.backgroundColor = "#fff7f3";
+    }
+
+    // Cleanup reset (important)
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, [currentDay]);
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-8">
-      {/* Title */}
-      <h1 className="text-5xl love-title text-center text-[#6d1f2a]">
-        Love Week 💖
-      </h1>
+    <>
+      {/* ✅ Background Switch (Key Forces Remount) */}
+      <div key={currentDay}>
+        {currentDay === 1 && <Day1Background />}
+        {currentDay === 2 && <Day2Background />}
+      </div>
 
-      <p className="love-body text-center text-gray-600 mt-2">
-        Unlock each day like a love story chapter…
-      </p>
+      {/* ✅ Music Button Dynamic */}
+      <MusicToggle currentDay={currentDay} />
 
-      {/* Timeline Buttons */}
-      <div className="mt-8 flex flex-wrap justify-center gap-3">
-        {days.map((day) => {
-          const locked = day.id > unlockedDay;
+      <LoveLayout>
+        {/* ✅ Timeline Pills */}
+        <div className="flex gap-3 justify-center flex-wrap mb-8">
+          {/* Day 1 */}
+          <button
+            onClick={() => handleDayClick(1)}
+            className={`px-5 py-2 rounded-full text-sm font-medium transition
+              ${
+                currentDay === 1
+                  ? "bg-[#6b1d2a] text-white"
+                  : "bg-white border border-gray-300 text-gray-700"
+              }`}
+          >
+            Day 1
+          </button>
 
-          return (
+          {/* Day 2 */}
+          {ACTIVE_DAY >= 2 ? (
             <button
-              key={day.id}
-              disabled={locked}
-              onClick={() => setActiveDay(day.id)}
-              className={`px-4 py-2 rounded-full text-sm shadow-md transition
+              onClick={() => handleDayClick(2)}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition
                 ${
-                  locked
-                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                    : activeDay === day.id
-                    ? "bg-[#6d1f2a] text-white"
-                    : "bg-white text-[#6d1f2a]"
-                }
-              `}
+                  currentDay === 2
+                    ? "bg-yellow-300 text-black"
+                    : "bg-white border border-gray-300 text-gray-700"
+                }`}
             >
-              Day {day.id} {locked ? "🔒" : "✨"}
+              Day 2
             </button>
-          );
-        })}
-      </div>
+          ) : (
+            <ComingSoonButton />
+          )}
 
-      {/* Day Content Box */}
-      <div className="mt-10 bg-white rounded-3xl shadow-xl p-6">
-        {/* Day 1 */}
-        {activeDay === 1 && (
-          <Day1Rose
-            onFinish={() => {
-              setActiveDay(2);
-            }}
-          />
-        )}
+          {/* Future Days */}
+          <ComingSoonButton />
+          <ComingSoonButton />
+          <ComingSoonButton />
+          <ComingSoonButton />
+          <ComingSoonButton />
+        </div>
 
-        {/* Placeholder Days */}
-        {activeDay !== 1 && (
-          <div className="text-center">
-            <h2 className="text-3xl love-title text-[#6d1f2a]">
-              Coming Soon 💖
-            </h2>
-            <p className="love-body text-gray-600 mt-3">
-              This chapter will unlock soon…
-            </p>
+        {/* ✅ Main Content Wrapper */}
+        <div className="w-full flex justify-center">
+          <div
+            className={`
+              w-full max-w-107.5
+              rounded-3xl p-6 transition-all duration-500
+
+              ${
+                currentDay === 1
+                  ? "bg-white shadow-xl"
+                  : "bg-white/5 backdrop-blur-xl border border-yellow-200/10 shadow-2xl"
+              }
+            `}
+          >
+            {/* ✅ Day 1 */}
+            {currentDay === 1 && ACTIVE_DAY >= 1 && <Day1Rose />}
+
+            {/* ✅ Day 2 */}
+            {currentDay === 2 && ACTIVE_DAY >= 2 && <Day2Propose />}
+
+            {/* ✅ Locked Message */}
+            {currentDay > ACTIVE_DAY && (
+              <div className="text-center py-20">
+                <h2 className="love-title text-4xl text-gray-400">
+                  Coming Soon ✨
+                </h2>
+                <p className="love-body text-gray-500 mt-2">
+                  The next chapter unlocks soon…
+                </p>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      </LoveLayout>
+    </>
+  );
+}
+
+/* Coming Soon Pill */
+function ComingSoonButton() {
+  return (
+    <button
+      disabled
+      className="px-5 py-2 rounded-full text-sm bg-gray-100 text-gray-400 cursor-not-allowed"
+    >
+      Coming Soon
+    </button>
   );
 }

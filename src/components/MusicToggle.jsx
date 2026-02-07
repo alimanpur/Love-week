@@ -1,30 +1,57 @@
-import React,{ useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
-export default function MusicToggle() {
+export default function MusicToggle({ currentDay }) {
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
 
-  const toggleMusic = () => {
-    if (!playing) {
-      audioRef.current.play();
-    } else {
+  // 🎵 Music per day
+  const musicSrc =
+    currentDay === 2 ? "/music/day2.mp3" : "/music/day1.mp3";
+
+  // Reset when day changes
+  useEffect(() => {
+    if (audioRef.current) {
       audioRef.current.pause();
+      audioRef.current.load();
+      setPlaying(false);
     }
-    setPlaying(!playing);
+  }, [currentDay]);
+
+  const toggleMusic = () => {
+    if (!audioRef.current) return;
+
+    if (playing) {
+      audioRef.current.pause();
+      setPlaying(false);
+    } else {
+      audioRef.current.play();
+      setPlaying(true);
+    }
   };
 
+  // 🎨 Button Theme per Day
+  const buttonTheme =
+    currentDay === 2
+      ? "bg-gradient-to-r from-yellow-300 to-yellow-500 text-black"
+      : "bg-[#6b1d2a] text-white";
+
   return (
-    <div className="fixed bottom-5 right-5 z-50">
-      <audio ref={audioRef} loop>
-        <source src="/music.mp3" type="audio/mp3" />
+    <>
+      <audio ref={audioRef}>
+        <source src={musicSrc} type="audio/mp3" />
       </audio>
 
       <button
         onClick={toggleMusic}
-        className="px-4 py-2 rounded-full bg-[#6d1f2a] text-white shadow-lg text-sm"
+        className={`
+          fixed bottom-6 right-6 z-50
+          px-5 py-3 rounded-full shadow-xl
+          font-semibold transition hover:scale-105
+          ${buttonTheme}
+        `}
       >
-        {playing ? "Pause 🎶" : "Play 🎶"}
+        {playing ? "Pause 🎶" : "Play 🎵"}
       </button>
-    </div>
+    </>
   );
 }

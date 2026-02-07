@@ -1,7 +1,23 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { downloadElementAsImage } from "../../utils/downloadCard";
+
 
 export default function FinalLetter({ bouquetSize, selectedRoses, onFinish }) {
+  
+  // ✅ Share Logic
+  const shareLetter = async () => {
+    if (navigator.share) {
+      await navigator.share({
+        title: "Rose Day Letter 💌",
+        text: "A love letter made just for you 🌹",
+        url: window.location.href,
+      });
+    } else {
+      alert("Sharing not supported on this browser.");
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -10,9 +26,11 @@ export default function FinalLetter({ bouquetSize, selectedRoses, onFinish }) {
       className="w-full flex justify-center"
     >
       {/* Letter Card */}
-      <div className="w-full max-w-105 bg-white/80 backdrop-blur-xl 
-      rounded-[28px] shadow-2xl p-6 border border-[#f3e6e8] relative overflow-hidden">
-
+      <div
+        id="final-letter-card"
+        className="w-full max-w-105 bg-white/80 backdrop-blur-xl 
+        rounded-[28px] shadow-2xl p-6 border border-[#f3e6e8] relative overflow-hidden"
+      >
         {/* Floating Hearts Background */}
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <div className="absolute top-6 left-6 text-3xl">💗</div>
@@ -57,9 +75,7 @@ export default function FinalLetter({ bouquetSize, selectedRoses, onFinish }) {
             <br />
             <br />
             You chose{" "}
-            <span className="font-semibold">
-              {bouquetSize} roses
-            </span>{" "}
+            <span className="font-semibold">{bouquetSize} roses</span>{" "}
             today, and each one carries a piece of my feelings for you.
             <br />
             <br />
@@ -84,19 +100,28 @@ export default function FinalLetter({ bouquetSize, selectedRoses, onFinish }) {
 
         {/* Download + Share Buttons */}
         <div className="flex gap-3 mt-4">
+          
+          {/* ✅ Download Button Working */}
           <button
-            className="w-1/2 py-2 rounded-full border border-[#6d1f2a]
-            text-[#6d1f2a] love-body text-sm hover:bg-[#6d1f2a] hover:text-white transition"
+            onClick={() =>
+              downloadElementAsImage("final-letter-card", "LoveLetter.png")
+            }
           >
             📥 Download
           </button>
 
-          <button
-            className="w-1/2 py-2 rounded-full border border-[#6d1f2a]
-            text-[#6d1f2a] love-body text-sm hover:bg-[#6d1f2a] hover:text-white transition"
-          >
-            🔗 Share
-          </button>
+          {/* ✅ Share Button Working */}
+         <button
+              onClick={() => {
+                navigator.share({
+                  title: "Love Letter 💌",
+                  text: "A letter made with love…",
+                  url: window.location.href,
+                });
+              }}
+            >
+              🔗 Share
+            </button>
         </div>
       </div>
     </motion.div>
